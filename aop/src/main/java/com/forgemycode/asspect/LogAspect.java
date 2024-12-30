@@ -7,10 +7,12 @@ import java.util.logging.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
+@Order(1) //this will make the LogAspect run first
 public class LogAspect {
 	
 	private Logger logger = Logger.getLogger(LogAspect.class.getName());
@@ -20,13 +22,13 @@ public class LogAspect {
 		Instant start = Instant.now();
         logger.info("method execution start");
 		
-		
         proccedingJoinPoint.proceed();
         
         Instant finish = Instant.now();
         long timeElapsed = Duration.between(start, finish).toMillis();
-        logger.info("Time took to execute the method : "+timeElapsed);
-	    
+        logger.info("Time took to execute the method : "+timeElapsed);    
+        
+        
 	     
 	}
 
